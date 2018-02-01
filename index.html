@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script type="text/javascript" src="swfobject.js">
+		</script>
+		<style type="text/css" title="Default">
+			body, div, h1, h2, h3, span, p {
+				font-family: Verdana,Arial,Helvetica,sans-serif;
+			}
+			/* fullscreen */
+			html {
+				height:100%;
+			}
+			body {
+				height:100%;
+				margin: 0px;
+				overflow:hidden; /* disable scrollbars */
+				font-size: 10pt;
+			}
+			/* fix for scroll bars on webkit & >=Mac OS X Lion */ 
+			::-webkit-scrollbar {
+				background-color: rgba(0,0,0,0.5);
+				width: 0.75em;
+			}
+			::-webkit-scrollbar-thumb {
+    			background-color:  rgba(255,255,255,0.5);
+			}
+		</style>	
+	</head>
+	<body>
+<!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - -->
+		<script type="text/javascript" src="pano2vr_player.js">
+		</script>
+		<script type="text/javascript" src="skin.js">
+		</script>
+		<div id="container" style="width:100%;height:100%;">
+		This content requires HTML5/CSS3, WebGL, or Adobe Flash Player Version 10 or higher.
+		</div>
+		<script type="text/javascript">
+	
+		// check for CSS3 3D transformations and WebGL
+		if (ggHasHtml5Css3D() || ggHasWebGL()) {
+			// use HTML5 panorama
+			// create the panorama player with the container
+			pano=new pano2vrPlayer("container");
+		} else 
+		if (swfobject.hasFlashPlayerVersion("10.0.0")) {
+			var flashvars = {};
+			var params = {};
+			// enable javascript interface
+			flashvars.externalinterface="1";
+			params.quality = "high";
+			params.bgcolor = "";
+			params.allowscriptaccess = "sameDomain";
+			params.allowfullscreen = "true";
+			var attributes = {};
+			attributes.id = "flashpano";
+			attributes.name = "flashpano";
+			attributes.align = "middle";
+	
+			params.base=".";
+			params.wmode = "transparent";
+			pano=new pano2vrPlayer("container",{ useFlash:true, flashPlayerId: 'flashpano', flashContainerId:'flashcontainer'});
+			swfobject.embedSWF("pano2vr_player.swf", "flashcontainer", "100%", "100%", "10.0.0", "", flashvars, params, attributes);
+		}
+		// add the skin object
+		skin=new pano2vrSkin(pano);
+		// load the configuration
+		panorama='<?xml version="1.0" encoding="UTF-8"?>';
+			panorama+='<panorama id="node1">';
+			panorama+='  <input leveltilesize="510" levelingroll="0" leveltileurl="tiles/1_9W6uh4LAvdyO0hOh0kGdBQ/cf_%c/l_%l/c_%x/tile_%y.jpg" levelingpitch="0" levelbiashidpi="0.400" width="250" height="250" levelbias="0.400" overlap="1">';
+			panorama+='    <level predecode="1" width="250" height="250" preload="1"/>';
+			panorama+='    <preview color="0x808080" strip="1"/>';
+			panorama+='  </input>';
+			panorama+='  <view pannorth="0" fovmode="0">';
+			panorama+='    <start tilt="0" pan="0" fov="70"/>';
+			panorama+='    <min tilt="-90" pan="0" fov="5"/>';
+			panorama+='    <max tilt="90" pan="360" fov="120"/>';
+			panorama+='  </view>';
+			panorama+='  <userdata datetime="" comment="" tags="Pictures" longitude="" source="" latitude="" author="" title="" description="" copyright="" info=""/>';
+			panorama+='  <hotspots width="180" height="20" wordwrap="1">';
+			panorama+='    <label backgroundcolor="0xffffff" enabled="1" borderalpha="1" width="180" textalpha="1" height="20" border="1" backgroundalpha="1" borderradius="1" wordwrap="1" textcolor="0x000000" bordercolor="0x000000" background="1"/>';
+			panorama+='    <polystyle backgroundcolor="0x0000ff" borderalpha="1" mode="0" handcursor="1" backgroundalpha="0.2509803921568627" bordercolor="0x0000ff"/>';
+			panorama+='  </hotspots>';
+			panorama+='  <media/>';
+			panorama+='  <transition enabled="0" blendtime="1" zoomoutpause="1" zoomout="0" zoomspeed="2" type="crossdissolve" softedge="0" zoomin="0" blendcolor="0x000000" zoomfov="20"/>';
+			panorama+='  <control lockedkeyboardzoom="0" speedwheel="1" dblclickfullscreen="0" lockedwheel="0" invertwheel="0" contextfullscreen="0" sensitivity="8" simulatemass="1" lockedmouse="0" invertcontrol="1" hideabout="0" lockedkeyboard="0"/>';
+			panorama+='</panorama>';
+			panorama+='';
+		pano.readConfigString(panorama);
+		</script>
+		<noscript>
+			<p><b>Please enable Javascript!</b></p>
+		</noscript>
+<!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - --> 
+	</body>
+</html>
